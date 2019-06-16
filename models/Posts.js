@@ -2,7 +2,7 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-const PostSchema = new Schema({
+const BlogPostSchema = new Schema({
   createdAt: {
     type: Date,
     default: Date.now()
@@ -17,4 +17,4 @@ const PostSchema = new Schema({
   }
 });
 
-module.exports = mongoose.model('Posts', PostSchema);
+module.exports = mongoose.model('BlogPosts', BlogPostSchema);
