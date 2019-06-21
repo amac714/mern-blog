@@ -29,7 +29,7 @@ router.post('/register', (req, res) => {
     return res.status(400).json(errors);
   }
 
-  // check if username already exists in db
+  // check if username already exists in db then create new user
   User.findOne({ username: req.body.username }).then(user => {
     if(user) {
       return res.status(400).json({ username: 'Username already exists' });
@@ -100,5 +100,6 @@ router.post('/login', (req, res) => {
     });
   });
 });
+
 
 module.exports = router;
