@@ -12,13 +12,13 @@ const Blogpost = require('../../models/Posts');
 // ENDPOINTS
 ////////////////////////////////////////////////////////////////////////
 
-// Get user's comments
+// Get user's blog posts
 router.get(
   '/',
   passport.authenticate('jwt', { session: false }),
   (req, res) => {
     User.findById(req.user.id, (err, user) => {
-      if (!user) {
+      if (err) {
         console.log(err);
         return res.status(404).json({ error: 'User not found' });
       }
@@ -47,6 +47,7 @@ router.post(
         return res.status(400).json({ error: err });
       }
       const newPost = new Blogpost({
+        title: req.body.title,
         text: req.body.post,
         author: {
           username: req.user.username,
@@ -74,7 +75,7 @@ router.put(
     // find Blogpost and update it
     Blogpost.findOneAndUpdate(
       { _id: { $eq: req.params.post_id } },
-      { $set: { text: req.body.post } },
+      { $set: { title: req.body.title, text: req.body.post } },
       (err, post) => {
         if (err) {
           console.log(err);

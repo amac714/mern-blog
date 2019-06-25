@@ -33,10 +33,6 @@ app.use(passport.initialize());
 // passport config
 require('./config/passport')(passport);
 
-app.get('/', passport.authenticate('jwt', { session: false }), (req, res) => {
-  res.json({ id: req.user.id, username: req.user.username, posts: req.user.blogPosts });
-});
-
 // routes
 app.use('/api/users/', users);
 app.use('/api/blogposts/', blogposts);

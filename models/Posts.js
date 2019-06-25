@@ -7,6 +7,7 @@ const BlogPostSchema = new Schema({
     type: Date,
     default: Date.now()
   },
+  title: String,
   text: String,
   author: {
     id: {
