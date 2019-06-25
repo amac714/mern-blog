@@ -16,6 +16,11 @@ app.use(bodyParser.json());
 // db config
 const db = require('./config/keys').mongoURI;
 
+// need to set useFindAndModify to false because
+// we want to use mongodb's version of findOneAndUpdate
+// this will take away deprecation warnings
+mongoose.set('useFindAndModify', false);
+
 // connecting to mongoDB at mLab
 mongoose
   .connect(db, { useNewUrlParser: true })
