@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
+import {registerUser} from '../../actions/authActions';
 
-function Register() {
+function Register(props) {
   const [name, setName] = useState('');
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -18,7 +20,18 @@ function Register() {
       password2,
     };
 
-    console.log(newUser);
+    setName('');
+    setUsername('');
+    setPassword('');
+    setPassword2('');
+    setErrors('');
+
+    // note to self: use useEffect and pass it as arg to get errors?? 
+    registerUser(props, newUser);
+    // axios
+    //   .post('/api/users/register', newUser)
+    //   .then(res => props.history.push('/login'))
+    //   .catch(err => console.log(err));
   };
 
   return (

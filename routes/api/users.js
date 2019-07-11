@@ -24,7 +24,7 @@ router.post('/register', (req, res) => {
 
   // Form validation
   const { errors, isValid } = validateResgisterInput(req.body);
-
+  
   if(!isValid) {
     return res.status(400).json(errors);
   }
@@ -80,7 +80,8 @@ router.post('/login', (req, res) => {
         // found user, create jwt payload
         const payload = {
           id: user.id,
-          name: user.name
+          name: user.name,
+          username: user.username
         };
 
         // sign token

@@ -1,17 +1,66 @@
-import React, { useState } from 'react';
+import React, { useState, useReducer } from 'react';
 import { Link } from 'react-router-dom';
+import { loginUser } from '../../actions/authActions';
+import axios from 'axios';
+import setAuthToken from '../../utils/setAuthToken';
+import jwt_decode from 'jwt-decode';
 
-function Login() {
+// const isEmpty = require("is-empty");
+
+// const loginReducer = (state, action) => {
+//   switch (action.type) {
+//     case 'SET_CURRENT_USER':
+//       return {
+//         ...state,
+//         isAuthenticated: !isEmpty(action.payload),
+//         user: action.payload
+//       };
+//     case 'USER_LOADING':
+//       return {
+//         ...state,
+//         loading: true
+//       };
+//     case 'GET_ERRORS':
+//       return action.payload;
+//     default:
+//       return state;
+//   }
+// }
+
+function Login(props) {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const [errors, setErrors] = useState({});
+  const [error, setError] = useState('');
+  // const [state, dispatch] = useReducer(loginReducer, {
+  //   isAuthenticated: false,
+  //   isLoading: false,
+  //   user: {},
+  //   errors: {}
+  // });
+  const userLogin = async userData => {
+    try {
+      const result = await axios.post('/api/users/login', userData);
+
+      // Set token to localStorage
+      const { token } = result.data;
+      localStorage.setItem('jwtToken', token);
+
+      // Set token to Auth header
+      setAuthToken(token);
+    
+      // Decode token to get user data
+      // const decoded = jwt_decode(token);
+      props.history.push('/dashboard');
+    } catch (err) {
+      console.log(err);
+      setError('Password or username is incorrect.');
+    }
+  };
 
   const onSubmit = e => {
     e.preventDefault();
-
     const userData = { username, password };
-
-    console.log(userData);
+    userLogin(userData);
   };
 
   return (
@@ -33,9 +82,9 @@ function Login() {
           <form noValidate onSubmit={onSubmit}>
             <div className="input-field col s12">
               <input
-                onChange={(e) => setUsername(e.target.value)}
+                onChange={e => setUsername(e.target.value)}
                 value={username}
-                error={errors.username}
+                // error={errors.username}
                 id="username"
                 type="text"
               />
@@ -43,9 +92,9 @@ function Login() {
             </div>
             <div className="input-field col s12">
               <input
-                onChange={(e) => setPassword(e.target.value)}
+                onChange={e => setPassword(e.target.value)}
                 value={password}
-                error={errors.password}
+                // error={errors.password}
                 id="password"
                 type="password"
               />
