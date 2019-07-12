@@ -1,1 +1,1 @@
-This is a mern blog that is a work in progress.
+This is a blog built using the MERN stack. It is a work in progress.
