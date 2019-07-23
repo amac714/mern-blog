@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import jwt_decode from 'jwt-decode';
-import { STATES } from 'mongoose';
+import BlogForm from '../form/BlogpostForm';
+import axios from 'axios';
 
 // function Dashboard() {
 //   const [username, setUsername] = useState('');
-  
+
 //   const token = localStorage.getItem('jwtToken');
 //   // Decode token to get user data
 //   const decoded = jwt_decode(token);
@@ -20,20 +21,56 @@ class Dashboard extends React.Component {
     super();
 
     this.state = {
-      username: ''
-    }
+      username: '',
+      title: '',
+      post: '',
+      jwtToken: '',
+    };
   }
 
   componentDidMount() {
     const token = localStorage.getItem('jwtToken');
     const decoded = jwt_decode(token);
-    this.setState({username: decoded.username});
+    this.setState({ username: decoded.username, jwtToken: token });
   }
+
+  onSubmit = e => {
+    e.preventDefault();
+    const data = { title: this.state.title, post: this.state.post};
+    this.createBlogPost(data);
+  };
+
+  onChange = e => {
+    this.setState({ [e.target.id]: e.target.value });
+  };
+
+  createBlogPost = async blogData => {
+    const headers = {
+      'Content-type': 'application/json',
+      Authorization: this.state.jwtToken,
+    };
+
+    try {
+      const result = await axios.post('/api/blogposts/', blogData, { headers });
+      console.log(result);
+      this.setState({title: '', post: ''})
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   render() {
-    const {username} = this.state;
-    return(
-      <div>This is {username}'s dashboard</div>
-    )
+    const { username } = this.state;
+    return (
+      <>
+        <div>This is {username}'s dashboard</div>
+        <BlogForm
+          savePost={this.onSubmit}
+          onChange={this.onChange}
+          {...this.state}
+        />
+      </>
+    );
   }
 }
 
