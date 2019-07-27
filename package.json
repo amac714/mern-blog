@@ -8,7 +8,8 @@
     "start": "node server.js",
     "server": "nodemon server.js",
     "client": "npm start --prefix client",
-    "dev": "concurrently \"npm run server\" \"npm run client\""
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "test": "jest"
   },
   "author": "Alan Macabuhay",
   "license": "ISC",
@@ -26,6 +27,13 @@
     "validator": "^11.0.0"
   },
   "devDependencies": {
-    "nodemon": "^1.19.1"
+    "babel-cli": "^6.26.0",
+    "babel-preset-env": "^1.7.0",
+    "jest": "^24.8.0",
+    "mocha": "^6.2.0",
+    "nodemon": "^1.19.1",
+    "should": "^13.2.3",
+    "superagent": "^5.1.0",
+    "supertest": "^4.0.2"
   }
 }
