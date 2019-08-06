@@ -2,7 +2,7 @@
 
 ## Front-end to do:
 
-Create components to display/edit/delete blog posts
+Create components to ~~display~~/edit/delete blog posts
 
 Convert class components into functional components and use hooks
   - Dashboard

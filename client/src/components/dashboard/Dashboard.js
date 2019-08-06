@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import jwt_decode from 'jwt-decode';
 import BlogForm from '../form/BlogpostForm';
 import axios from 'axios';
+import Posts from '../layout/Posts';
 
 // function Dashboard() {
 //   const [username, setUsername] = useState('');
@@ -62,14 +63,15 @@ class Dashboard extends React.Component {
   render() {
     const { username } = this.state;
     return (
-      <>
-        <div>This is {username}'s dashboard</div>
+      <div className="container">
+        <h1>Hello, {username}.</h1>
         <BlogForm
           savePost={this.onSubmit}
           onChange={this.onChange}
           {...this.state}
         />
-      </>
+        <Posts />
+      </div>
     );
   }
 }
