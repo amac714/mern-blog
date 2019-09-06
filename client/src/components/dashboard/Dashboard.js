@@ -22,6 +22,7 @@ class Dashboard extends React.Component {
     super();
 
     this.state = {
+      data: [],
       username: '',
       title: '',
       post: '',
@@ -37,7 +38,7 @@ class Dashboard extends React.Component {
 
   onSubmit = e => {
     e.preventDefault();
-    const data = { title: this.state.title, post: this.state.post};
+    const data = { title: this.state.title, post: this.state.post };
     this.createBlogPost(data);
   };
 
@@ -54,14 +55,15 @@ class Dashboard extends React.Component {
     try {
       const result = await axios.post('/api/blogposts/', blogData, { headers });
       console.log(result);
-      this.setState({title: '', post: ''})
+      this.setState({ data: result.data, title: '', post: '' });
+      
     } catch (err) {
       console.log(err);
     }
   };
 
   render() {
-    const { username } = this.state;
+    const { username, data } = this.state;
     return (
       <div className="container">
         <h1>Hello, {username}.</h1>
@@ -70,7 +72,7 @@ class Dashboard extends React.Component {
           onChange={this.onChange}
           {...this.state}
         />
-        <Posts />
+        <Posts renderPosts={this.renderPosts}/>
       </div>
     );
   }

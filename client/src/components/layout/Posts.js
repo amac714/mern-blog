@@ -5,7 +5,7 @@ class Posts extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      data: []
+      data: [],
     };
   }
 
@@ -15,7 +15,7 @@ class Posts extends React.Component {
   }
 
   // componentDidUpdate() {
-  //   this.renderPosts();
+  //   this.renderPosts(this.state.data);
   // }
 
   getMyPosts = async token => {
@@ -36,9 +36,7 @@ class Posts extends React.Component {
   renderPosts = ({ _id, title, text }) => {
     return (
       <div className="container" key={_id}>
-        <h2>
-          {title}
-        </h2>
+        <h2>{title}</h2>
         <p>{text}</p>
         {/* <button className="button" onClick={() => this.deletePost(`${id}`)}>
           Delete
@@ -49,11 +47,7 @@ class Posts extends React.Component {
 
   render() {
     const { data } = this.state;
-    return (
-      <div>
-       {data.map(this.renderPosts)}
-      </div>
-    );
+    return <div>{data.map(this.renderPosts)}</div>;
   }
 }
 

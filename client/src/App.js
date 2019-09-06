@@ -3,7 +3,7 @@ import './App.css';
 import { Router, Route } from 'react-router-dom';
 import { createBrowserHistory } from 'history';
 import Navbar from './components/layout/Navbar';
-import Landing from './components/layout/Landing';
+import Landing from './components/routes/Landing';
 import Register from './components/auth/Register';
 import Login from './components/auth/Login';
 import Dashboard from './components/dashboard/Dashboard';
