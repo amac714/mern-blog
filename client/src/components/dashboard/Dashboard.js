@@ -37,6 +37,10 @@ class Dashboard extends React.Component {
     this.getMyPosts(token);
   }
 
+  componentDidUpdate() {
+    this.getMyPosts(this.state.jwtToken);
+  }
+
   handleOnSubmit = e => {
     e.preventDefault();
     const data = { title: this.state.title, post: this.state.post };
@@ -69,7 +73,6 @@ class Dashboard extends React.Component {
 
     try {
       const result = await axios.post('/api/blogposts/', blogData, { headers });
-      console.log(result.data);
       this.setState({ data: result.data, title: '', post: '' });
     } catch (err) {
       console.log(err);

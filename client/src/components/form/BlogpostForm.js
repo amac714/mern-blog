@@ -1,18 +1,18 @@
 import React from 'react';
 
-function BlogForm(props) {
+function BlogForm({ savePost, title, post, onChange }) {
   return (
     <div className="container">
       <div className="row">
-        <form className="col s12" onSubmit={props.savePost}>
+        <form className="col s12" onSubmit={savePost}>
           <div className="row">
             <div className="input-field col s12">
               <input
                 id="title"
                 type="text"
-                value={props.title}
+                value={title}
                 className="validate"
-                onChange={props.onChange}
+                onChange={onChange}
               />
               <label htmlFor="title">Title</label>
             </div>
@@ -21,9 +21,9 @@ function BlogForm(props) {
             <div className="input-field col s12">
               <textarea
                 id="post"
-                value={props.post}
+                value={post}
                 className="materialize-textarea"
-                onChange={props.onChange}
+                onChange={onChange}
               />
               <label htmlFor="textarea1">Blogpost</label>
             </div>
