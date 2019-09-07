@@ -34,16 +34,31 @@ class Dashboard extends React.Component {
     const token = localStorage.getItem('jwtToken');
     const decoded = jwt_decode(token);
     this.setState({ username: decoded.username, jwtToken: token });
+    this.getMyPosts(token);
   }
 
-  onSubmit = e => {
+  handleOnSubmit = e => {
     e.preventDefault();
     const data = { title: this.state.title, post: this.state.post };
     this.createBlogPost(data);
   };
 
-  onChange = e => {
+  handleOnChange = e => {
     this.setState({ [e.target.id]: e.target.value });
+  };
+
+  getMyPosts = async token => {
+    const headers = {
+      'Content-type': 'application/json',
+      Authorization: token,
+    };
+
+    try {
+      const result = await axios.get('/api/blogposts/', { headers });
+      this.setState({ data: result.data });
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   createBlogPost = async blogData => {
@@ -54,25 +69,28 @@ class Dashboard extends React.Component {
 
     try {
       const result = await axios.post('/api/blogposts/', blogData, { headers });
-      console.log(result);
+      console.log(result.data);
       this.setState({ data: result.data, title: '', post: '' });
-      
     } catch (err) {
       console.log(err);
     }
   };
 
+  // NOTES: TO-DO
+  // make GET api call for posts from dashboard
+  // pass state down to <Posts />
+
   render() {
-    const { username, data } = this.state;
+    const { username } = this.state;
     return (
       <div className="container">
         <h1>Hello, {username}.</h1>
         <BlogForm
-          savePost={this.onSubmit}
-          onChange={this.onChange}
+          savePost={this.handleOnSubmit}
+          onChange={this.handleOnChange}
           {...this.state}
         />
-        <Posts renderPosts={this.renderPosts}/>
+        <Posts data={this.state.data} />
       </div>
     );
   }
