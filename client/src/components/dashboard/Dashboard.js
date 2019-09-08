@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import jwt_decode from 'jwt-decode';
 import BlogForm from '../form/BlogpostForm';
 import axios from 'axios';
@@ -22,11 +22,12 @@ class Dashboard extends React.Component {
     super();
 
     this.state = {
-      data: [],
+      postsArr: [],
       username: '',
       title: '',
       post: '',
       jwtToken: '',
+      isVisible: false,
     };
   }
 
@@ -59,10 +60,14 @@ class Dashboard extends React.Component {
 
     try {
       const result = await axios.get('/api/blogposts/', { headers });
-      this.setState({ data: result.data });
+      this.setState({ postsArr: result.data });
     } catch (err) {
       console.log(err);
     }
+  };
+
+  displayForm = () => {
+    this.setState({ isVisible: true });
   };
 
   createBlogPost = async blogData => {
@@ -73,27 +78,27 @@ class Dashboard extends React.Component {
 
     try {
       const result = await axios.post('/api/blogposts/', blogData, { headers });
-      this.setState({ data: result.data, title: '', post: '' });
+      this.setState({ postsArr: result.data, title: '', post: '', isVisible: false });
     } catch (err) {
       console.log(err);
     }
   };
 
-  // NOTES: TO-DO
-  // make GET api call for posts from dashboard
-  // pass state down to <Posts />
-
   render() {
-    const { username } = this.state;
+    const { username, isVisible } = this.state;
     return (
       <div className="container">
         <h1>Hello, {username}.</h1>
-        <BlogForm
-          savePost={this.handleOnSubmit}
-          onChange={this.handleOnChange}
-          {...this.state}
-        />
-        <Posts data={this.state.data} />
+        <button onClick={this.displayForm}>Create Post</button>
+        {isVisible ? (
+          <BlogForm
+            savePost={this.handleOnSubmit}
+            onChange={this.handleOnChange}
+            {...this.state}
+          />
+        ) : (
+          <Posts blogPosts={this.state.postsArr} />
+        )}
       </div>
     );
   }

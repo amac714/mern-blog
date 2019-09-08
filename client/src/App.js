@@ -4,8 +4,8 @@ import { Router, Route } from 'react-router-dom';
 import { createBrowserHistory } from 'history';
 import Navbar from './components/layout/Navbar';
 import Landing from './components/routes/Landing';
-import Register from './components/auth/Register';
-import Login from './components/auth/Login';
+import Register from './components/routes/Register';
+import Login from './components/routes/Login';
 import Dashboard from './components/dashboard/Dashboard';
 
 export const history = createBrowserHistory();

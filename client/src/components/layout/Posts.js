@@ -1,6 +1,6 @@
 import React from 'react';
 
-function Posts({ data }) {
+function Posts({ blogPosts }) {
   const renderPosts = ({ _id, title, text }) => {
     return (
       <div className="container" key={_id}>
@@ -13,7 +13,7 @@ function Posts({ data }) {
     );
   };
 
-  return <div>{data[1] ? data.map(renderPosts) : ''}</div>;
+  return <div>{blogPosts[1] ? blogPosts.map(renderPosts) : ''}</div>;
 };
 
 export default Posts;
