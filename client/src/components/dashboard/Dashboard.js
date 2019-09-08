@@ -66,10 +66,6 @@ class Dashboard extends React.Component {
     }
   };
 
-  displayForm = () => {
-    this.setState({ isVisible: true });
-  };
-
   createBlogPost = async blogData => {
     const headers = {
       'Content-type': 'application/json',
@@ -89,7 +85,7 @@ class Dashboard extends React.Component {
     return (
       <div className="container">
         <h1>Hello, {username}.</h1>
-        <button onClick={this.displayForm}>Create Post</button>
+        <button onClick={() => this.setState({isVisible: true})}>Create Post</button>
         {isVisible ? (
           <BlogForm
             savePost={this.handleOnSubmit}
