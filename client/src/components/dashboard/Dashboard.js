@@ -73,8 +73,25 @@ class Dashboard extends React.Component {
     };
 
     try {
-      const result = await axios.post('/api/blogposts/', blogData, { headers });
-      this.setState({ postsArr: result.data, title: '', post: '', isVisible: false });
+      await axios.post('/api/blogposts/', blogData, { headers });
+      this.setState({
+        title: '',
+        post: '',
+        isVisible: false,
+      });
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  deletePost = async id => {
+    const headers = {
+      'Content-type': 'application/json',
+      Authorization: this.state.jwtToken,
+    };
+
+    try {
+      await axios.delete(`/api/blogposts/${id}`, { headers });
     } catch (err) {
       console.log(err);
     }
@@ -85,7 +102,9 @@ class Dashboard extends React.Component {
     return (
       <div className="container">
         <h1>Hello, {username}.</h1>
-        <button onClick={() => this.setState({isVisible: true})}>Create Post</button>
+        <button onClick={() => this.setState({ isVisible: true })}>
+          Create Post
+        </button>
         {isVisible ? (
           <BlogForm
             savePost={this.handleOnSubmit}
@@ -93,7 +112,7 @@ class Dashboard extends React.Component {
             {...this.state}
           />
         ) : (
-          <Posts blogPosts={this.state.postsArr} />
+          <Posts blogPosts={this.state.postsArr} deletePost={this.deletePost} />
         )}
       </div>
     );
