@@ -9,7 +9,6 @@ function Posts({ blogPosts, deletePost }) {
       <div className="container" key={_id}>
         <h2>{title}</h2>
         <p>{text}</p>
-        {/* TODO: format createdAt date ex: Tuesday, 9/10/19, 4:20pm */}
         <p>{moment(createdAt).format('llll')}</p>
         <button className="button" onClick={() => deletePost(`${_id}`)}>
           Delete
