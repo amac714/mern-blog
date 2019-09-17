@@ -30,7 +30,7 @@ router.get(
           return res.status(404).json('error');
         }
         // return posts as json
-        res.json(post);
+        res.status(200).json(post);
       });
     });
   }
